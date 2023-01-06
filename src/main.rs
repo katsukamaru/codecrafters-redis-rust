@@ -1,3 +1,4 @@
+use std::io::Write;
 use std::net::TcpListener;
 
 fn main() {
@@ -5,13 +6,17 @@ fn main() {
     println!("Logs from your program will appear here!");
     let listener = TcpListener::bind("127.0.0.1:6379").unwrap();
     for stream in listener.incoming() {
-         match stream {
-             Ok(_stream) => {
-                 println!("accepted new connection");
-             }
-             Err(e) => {
-                 println!("error: {}", e);
-             }
-         }
+        match stream {
+            Ok(_stream) => {
+                println!("accepted new connection");
+                let response = "+PONG\r\n";
+                let mut _stream = _stream;
+                _stream.write(response.as_bytes()).unwrap();
+                _stream.flush().unwrap();
+            }
+            Err(e) => {
+                println!("error: {}", e);
+            }
+        }
     }
 }
