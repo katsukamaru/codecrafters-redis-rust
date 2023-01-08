@@ -41,7 +41,6 @@ async fn handle_connection(stream: TcpStream, client_store: Arc<Mutex<Store>>) -
 
     loop {
         let value = conn.read_value().await?;
-
         if let Some(value) = value {
             let (command, args) = value.to_command()?;
             let response = match command.to_ascii_lowercase().as_ref() {
@@ -53,7 +52,7 @@ async fn handle_connection(stream: TcpStream, client_store: Arc<Mutex<Store>>) -
                             SimpleString(value)
                         } else {
                             Null
-                        }
+                        }`
                     } else {
                         Error("Set requires two arguments".to_string())
                     }
@@ -69,7 +68,6 @@ async fn handle_connection(stream: TcpStream, client_store: Arc<Mutex<Store>>) -
                 }
                 _ => Error(format!("command not implemented: {}", command)),
             };
-
             conn.write_value(response).await?;
         } else {
             break;
