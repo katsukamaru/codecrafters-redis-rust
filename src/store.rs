@@ -21,7 +21,7 @@ impl Store {
         self.data.insert(key, Entry { t: None, value });
     }
 
-    pub fn set_px(&mut self, key: String, value: String, px: u64) {
+    pub fn set_with_expiry(&mut self, key: String, value: String, px: u64) {
         let entry = Entry {
             t: Some(Instant::now() + Duration::from_millis(px)),
             value,
