@@ -52,7 +52,7 @@ async fn handle_connection(stream: TcpStream, client_store: Arc<Mutex<Store>>) -
                             SimpleString(value)
                         } else {
                             Null
-                        }`
+                        }
                     } else {
                         Error("Set requires two arguments".to_string())
                     }
